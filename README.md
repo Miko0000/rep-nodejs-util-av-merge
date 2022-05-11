@@ -3,6 +3,10 @@
 Merge a video file with an audio file
 
 ## syntax
+
+| ! | Full or Absolute path is needed! Relative path isn't supported |
+| --- | --- |
+
 ```js
 mer(pathToVideo, pathToAudio, pathForResult, callback);
 
@@ -26,18 +30,18 @@ mer(pathToVideo, pathToAudio, pathForResult, callback);
 
 ## example usage
 ```js
+const fs = require("fs");
+
 function callback(err, res){
 	if(err)
 		throw err;
 
-	const video = res;
-	// do something with the video
+	fs.readFile(res, function(err, video){
+		// do something with the video
+	});
 };
 
-void mer(
-	"video.mp4", "audio.mp3", "result.mp4",
-	callback
-);
+void mer(`${__dirname}/video.mp4`, `${__dirname}/audio.mp3`, `${__dirname}/result.mp4`, callback);
 ```
 
 ## dependency

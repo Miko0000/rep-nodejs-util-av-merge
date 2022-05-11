@@ -23,10 +23,9 @@
 
 const { spawn } = require("node:child_process");
 
-module.exports = function mer(vp, ap, op, o = {}, cb){	
+module.exports = function mer(vp, ap, op, cb){	
 	const cp = spawn("ffmpeg",
-		(`-i $0 -i $1 -c:v copy -map 0:v:0 -map 1:a:0 -shortest ${op}`
-		+ `--loglevel level+fatal`)
+		(`-i $0 -i $1 -c:v copy -map 0:v:0 -map 1:a:0 -shortest ${op}`)
 			.split(/ +/)
 			.map(el => {
 				if(el[0] == '$')
@@ -42,8 +41,8 @@ module.exports = function mer(vp, ap, op, o = {}, cb){
 	);
 	
 	cp.on("exit", code => {
-		if(!code)
-			cb(null, op);
+		if(code == 0)
+			return cb(null, op);
 		
 		err.code = code;
 		cb(err, null);
